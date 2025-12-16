@@ -1,2 +1,5 @@
-#build artifacts
+# editor artifacts
+.cache/
+
+# build artifacts
 build/
