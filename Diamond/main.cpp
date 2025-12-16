@@ -1,24 +1,17 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 class Diamond
 {
 	int height;
-	char* matrix = nullptr;
-
-	Diamond(const Diamond&) = delete;
-	Diamond& operator=(const Diamond&) = delete;
-
-	void setChar(int i, int j, char s)
-	{
-		matrix[i * height + j] = s;
-	}
+	std::vector<char> matrix;
 
 public:
 	Diamond(int height)
 		: height(height)
 	{
-		matrix = new char[height * height];
+		matrix.reserve(height * height);
 
 		int halfHeight = height / 2;
 		for (int i = 0; i < height; ++i)
@@ -27,19 +20,14 @@ public:
 		    {
 		        if (std::abs(i - halfHeight) + std::abs(j - halfHeight) == halfHeight)
 		        {
-		            setChar(i, j, '*');
+		            matrix.push_back('*');
 		        }
 		        else
 		        {
-		            setChar(i, j, ' ');
+		           	matrix.push_back(' ');
 		        }
 		    }
 		}
-	}
-
-	~Diamond()
-	{
-		delete [] matrix;
 	}
 
 	void print() const
@@ -60,7 +48,7 @@ int main()
 	int height = 0;
 	std::cout << "Enter the odd height of the diamond: ";
 	std::cin >> height;
-	if (!height || height < 0)
+	if (height <= 0)
 	{
 		std::cout << "The height of the diamond must be positive.\n";
 		return 0;
