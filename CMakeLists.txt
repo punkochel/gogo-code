@@ -4,3 +4,4 @@ project(gogo-apps LANGUAGES CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(Hello)
+add_subdirectory(Diamond)
