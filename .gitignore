@@ -3,3 +3,7 @@
 
 # build artifacts
 build/
+
+# bin
+*.lib
+*.dll
