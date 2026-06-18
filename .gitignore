@@ -12,3 +12,4 @@ build/
 
 # auto-configs
 CMakeUserPresets.json
+UserData/*.json
