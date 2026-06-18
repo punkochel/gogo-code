@@ -19,3 +19,10 @@ cd Hello
 cmake -B build -G Ninja .
 cmake --build build
 ```
+
+### Bazinga compilation
+```bash
+cl /EHsc /W4 /std:c++20 0001.cpp 		# for msvc
+clang++ -Wall -g -std=c++20 0001.cpp 	# for clang
+g++ -Wall -g -std=c++20 0001.cpp 		# for g++
+```
