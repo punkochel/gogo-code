@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <map>
 
 enum Keys
 {
@@ -59,56 +60,33 @@ public:
 
 class InputHandler
 {
-	std::unique_ptr<Command> keyW_;
-	std::unique_ptr<Command> keyA_;
-	std::unique_ptr<Command> keyS_;
-	std::unique_ptr<Command> keyD_;
+	std::map<Keys, std::unique_ptr<Command>> keys_;
 
 public:
 	InputHandler()
-		: keyW_(std::make_unique<CommandForward>())
-		, keyA_(std::make_unique<CommandLeft>())
-		, keyS_(std::make_unique<CommandBack>())
-		, keyD_(std::make_unique<CommandRight>())
 	{
+		keys_.emplace(KEY_W, std::make_unique<CommandForward>());
+		keys_.emplace(KEY_A, std::make_unique<CommandLeft>());
+		keys_.emplace(KEY_S, std::make_unique<CommandBack>());
+		keys_.emplace(KEY_D, std::make_unique<CommandRight>());
 	}
 
 	void bindKey(Keys key, std::unique_ptr<Command> cmd)
 	{
-		switch (key)
+		if (cmd)
 		{
-			case KEY_W:
-				keyW_ = std::move(cmd);
-				break;
-			case KEY_A:
-				keyA_ = std::move(cmd);
-				break;
-			case KEY_S:
-				keyS_ = std::move(cmd);
-				break;
-			case KEY_D:
-				keyD_ = std::move(cmd);
-				break;
+			keys_[key] = std::move(cmd);
 		}
 	}
 
 	void handleInput()
 	{
-		if (isPressed(KEY_W))
+		for (const auto& [k, v] : keys_)
 		{
-			keyW_->execute();
-		}
-		else if (isPressed(KEY_A))
-		{
-			keyA_->execute();
-		}
-		else if (isPressed(KEY_S))
-		{
-			keyS_->execute();
-		}
-		else if (isPressed(KEY_D))
-		{
-			keyD_->execute();
+			if (isPressed(k) && v)
+			{
+				v->execute();
+			}
 		}
 	}
 };
